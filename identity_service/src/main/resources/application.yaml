@@ -20,4 +20,7 @@ app:
   services:
     profile: http://localhost:8080/profile
 
+jwt:
+  signerKey: "4vCM6CA5NXhXhG+LjHY+PfQRZYGjm13cHoNxVPuDyEYz2XB5SO/8Ko2vCxBkqHeT"
+
 
