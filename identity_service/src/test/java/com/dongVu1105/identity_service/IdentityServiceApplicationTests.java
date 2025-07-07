@@ -1,4 +1,4 @@
-package com.dongVu1105.identityService;
+package com.dongVu1105.identity_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

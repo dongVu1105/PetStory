@@ -1,4 +1,4 @@
-package com.dongVu1105.identityService.entity;
+package com.dongVu1105.identity_service.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
