@@ -43,9 +43,11 @@ public class UserService {
         roles.add(roleRepository.findById(PredefinedRole.USER_ROLE).orElseThrow(
                 () -> new AppException(ErrorCode.ROLE_NOT_EXISTED)));
         user.setRoles(roles);
+
         ProfileCreationRequest profileCreationRequest = profileMapper.toProfileCreationRequest(request);
         profileCreationRequest.setUserID(user.getId());
         ProfileCreationResponse profileCreationResponse = profileClient.create(profileCreationRequest).getResult();
+
         try {
             user = userRepository.save(user);
         } catch (Exception e){
@@ -55,5 +57,7 @@ public class UserService {
         userResponse.setId(profileCreationResponse.getId());
         return userResponse;
     }
+
+
 
 }
