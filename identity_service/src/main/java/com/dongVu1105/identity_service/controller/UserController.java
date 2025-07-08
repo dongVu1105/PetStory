@@ -23,6 +23,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ApiResponse<UserResponse> create (@RequestBody @Valid UserCreationRequest request) throws AppException {
+        System.out.println("Da vao user create controller");
         return ApiResponse.<UserResponse>builder().result(userService.create(request)).build();
     }
 }

@@ -2,9 +2,11 @@ package com.dongVu1105.identity_service.controller;
 
 import com.dongVu1105.identity_service.dto.ApiResponse;
 import com.dongVu1105.identity_service.dto.request.AuthenticationRequest;
+import com.dongVu1105.identity_service.dto.request.IntrospectRequest;
 import com.dongVu1105.identity_service.dto.request.LogoutRequest;
 import com.dongVu1105.identity_service.dto.request.RefreshTokenRequest;
 import com.dongVu1105.identity_service.dto.response.AuthenticationResponse;
+import com.dongVu1105.identity_service.dto.response.IntrospectResponse;
 import com.dongVu1105.identity_service.exception.AppException;
 import com.dongVu1105.identity_service.service.AuthenticationService;
 import lombok.AccessLevel;
@@ -26,6 +28,13 @@ public class AuthenticationController {
     ApiResponse<AuthenticationResponse> authenticate (@RequestParam AuthenticationRequest request) throws AppException {
         return ApiResponse.<AuthenticationResponse>builder()
                 .result(authenticationService.authenticate(request))
+                .build();
+    }
+
+    @PostMapping("/introspect")
+    ApiResponse<IntrospectResponse> introspect (@RequestParam IntrospectRequest request) throws AppException {
+        return ApiResponse.<IntrospectResponse>builder()
+                .result(authenticationService.introspect(request))
                 .build();
     }
 

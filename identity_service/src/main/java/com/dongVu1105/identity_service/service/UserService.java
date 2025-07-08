@@ -18,6 +18,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +33,8 @@ public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
-    ProfileClient profileClient;
-    ProfileMapper profileMapper;
+//    ProfileClient profileClient;
+//    ProfileMapper profileMapper;
     RoleRepository roleRepository;
 
     public UserResponse create (UserCreationRequest request) throws AppException {
@@ -44,17 +45,17 @@ public class UserService {
                 () -> new AppException(ErrorCode.ROLE_NOT_EXISTED)));
         user.setRoles(roles);
 
-        ProfileCreationRequest profileCreationRequest = profileMapper.toProfileCreationRequest(request);
-        profileCreationRequest.setUserID(user.getId());
-        ProfileCreationResponse profileCreationResponse = profileClient.create(profileCreationRequest).getResult();
+//        ProfileCreationRequest profileCreationRequest = profileMapper.toProfileCreationRequest(request);
+//        profileCreationRequest.setUserID(user.getId());
+//        ProfileCreationResponse profileCreationResponse = profileClient.create(profileCreationRequest).getResult();
 
         try {
             user = userRepository.save(user);
-        } catch (Exception e){
+        } catch (DataIntegrityViolationException exception){
             throw new AppException(ErrorCode.USER_EXISTED);
         }
         UserResponse userResponse = userMapper.toUserCreationResponse(user);
-        userResponse.setId(profileCreationResponse.getId());
+//        userResponse.setId(profileCreationResponse.getId());
         return userResponse;
     }
 
