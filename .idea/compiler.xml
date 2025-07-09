@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="profile_service" />
         <module name="api_gateway" />
       </profile>
       <profile name="Annotation profile for identityService" enabled="true">
@@ -30,6 +31,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api_gateway" options="-parameters" />
       <module name="identity_service" options="-parameters -Amapstruct.suppressGeneratorTimestamp=true -Amapstruct.defaultComponentModel=spring -Amapstruct.verbose=true" />
+      <module name="profile_service" options="-parameters" />
     </option>
   </component>
 </project>

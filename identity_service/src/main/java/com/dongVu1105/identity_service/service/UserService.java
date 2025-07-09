@@ -1,6 +1,7 @@
 package com.dongVu1105.identity_service.service;
 
 import com.dongVu1105.identity_service.constant.PredefinedRole;
+import com.dongVu1105.identity_service.dto.request.ChangePasswordRequest;
 import com.dongVu1105.identity_service.dto.request.UserCreationRequest;
 import com.dongVu1105.identity_service.dto.response.UserResponse;
 import com.dongVu1105.identity_service.entity.Role;
@@ -16,6 +17,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +62,16 @@ public class UserService {
     @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getUsers (){
         return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
+    }
+
+    public UserResponse changePassword (ChangePasswordRequest request){
+        String id = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        if(!passwordEncoder.matches(request.getOldPassword(), user.getPassword())){
+            throw new AppException(ErrorCode.INCORRECT_PASSWORD);
+        }
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        return userMapper.toUserResponse(userRepository.save(user));
     }
 
 

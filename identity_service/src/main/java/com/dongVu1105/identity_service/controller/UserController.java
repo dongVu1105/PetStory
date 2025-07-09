@@ -1,6 +1,7 @@
 package com.dongVu1105.identity_service.controller;
 
 import com.dongVu1105.identity_service.dto.ApiResponse;
+import com.dongVu1105.identity_service.dto.request.ChangePasswordRequest;
 import com.dongVu1105.identity_service.dto.request.UserCreationRequest;
 import com.dongVu1105.identity_service.dto.response.UserResponse;
 import com.dongVu1105.identity_service.exception.AppException;
@@ -28,5 +29,10 @@ public class UserController {
     @GetMapping("/getAll")
     public ApiResponse<List<UserResponse>> getUsers (){
         return ApiResponse.<List<UserResponse>>builder().result(userService.getUsers()).build();
+    }
+
+    @PostMapping("/change-password")
+    public ApiResponse<UserResponse> changePassword (@RequestBody @Valid ChangePasswordRequest request) throws AppException {
+        return ApiResponse.<UserResponse>builder().result(userService.changePassword(request)).build();
     }
 }
