@@ -43,11 +43,11 @@ public class AuthenticationService {
     private String SIGNER_KEY;
 
     @NonFinal
-    @Value("${jwt.access-token-duraion}")
+    @Value("${jwt.access-token-duration}")
     private long ACCESS_TOKEN_DURATION;
 
     @NonFinal
-    @Value("${jwt.refresh-token-duraion}")
+    @Value("${jwt.refresh-token-duration}")
     private long REFRESH_TOKEN_DURATION;
 
     InvalidatedTokenRepository invalidatedTokenRepository;
@@ -57,6 +57,7 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate (AuthenticationRequest request) throws AppException {
         User user = userRepository.findByUsername(request.getUsername()).orElseThrow(
                 () -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        System.out.println("Da check username");
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
@@ -74,6 +75,7 @@ public class AuthenticationService {
         try {
             verifyToken(request.getAccessToken(), false);
         } catch (Exception e){
+            System.out.println(e.getMessage());
             isValid = false;
         }
         return IntrospectResponse.builder().valid(isValid).build();
@@ -104,6 +106,7 @@ public class AuthenticationService {
     public AuthenticationResponse refreshToken (RefreshTokenRequest request)
             throws AppException, ParseException, JOSEException {
         SignedJWT refreshToken = verifyToken(request.getRefreshToken(), true);
+        System.out.println("Da check xong verify");
         invalidatedTokenRepository.save(InvalidatedToken.builder()
                 .id(refreshToken.getJWTClaimsSet().getJWTID())
                 .expiryTime(refreshToken.getJWTClaimsSet().getExpirationTime())
@@ -126,6 +129,7 @@ public class AuthenticationService {
                 .issuer("dongVu.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now().plus(ACCESS_TOKEN_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
+                .jwtID(UUID.randomUUID().toString())
                 .claim("scope", buildScope(user))
                 .claim("token_type", "access")
                 .build();
@@ -147,6 +151,7 @@ public class AuthenticationService {
                 .issuer("dongVu.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now().plus(REFRESH_TOKEN_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
+                .jwtID(UUID.randomUUID().toString())
                 .claim("token_type", "refresh")
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());

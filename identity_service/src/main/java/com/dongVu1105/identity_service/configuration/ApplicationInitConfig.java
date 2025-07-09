@@ -30,8 +30,9 @@ public class ApplicationInitConfig {
 
     @Bean
     ApplicationRunner applicationRunner(UserRepository userRepository) {
+        log.info("Initializing application.....");
         return args -> {
-            if (userRepository.findByUsername("admin") == null) {
+            if (userRepository.findByUsername("admin").isEmpty()) {
                 Set<Role> roles = new HashSet<>();
                 roles.add(roleRepository.findById(PredefinedRole.ADMIN_ROLE).orElseThrow(
                         () -> new AppException(ErrorCode.ROLE_NOT_EXISTED)));

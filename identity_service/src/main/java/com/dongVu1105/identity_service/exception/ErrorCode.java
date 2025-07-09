@@ -17,7 +17,7 @@ public enum ErrorCode {
     TOKEN_VALIDATED(1008, "token validated", HttpStatus.BAD_REQUEST),
     USERNAME_INVALID(1009, "Username must be at least {min} characters", HttpStatus.BAD_REQUEST),
     INVALID_PASSWORD(1010, "Password must be at least {min} characters", HttpStatus.BAD_REQUEST),
-    INVALID_EMAIL(10011, "Invalid email address", HttpStatus.BAD_REQUEST),
+    INVALID_EMAIL(1011, "Invalid email address", HttpStatus.BAD_REQUEST),
     EMAIL_IS_REQUIRED(1012, "Email is required", HttpStatus.BAD_REQUEST)
 
     ;

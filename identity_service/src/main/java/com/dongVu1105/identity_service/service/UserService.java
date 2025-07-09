@@ -1,28 +1,26 @@
 package com.dongVu1105.identity_service.service;
 
 import com.dongVu1105.identity_service.constant.PredefinedRole;
-import com.dongVu1105.identity_service.dto.request.ProfileCreationRequest;
 import com.dongVu1105.identity_service.dto.request.UserCreationRequest;
-import com.dongVu1105.identity_service.dto.response.ProfileCreationResponse;
 import com.dongVu1105.identity_service.dto.response.UserResponse;
 import com.dongVu1105.identity_service.entity.Role;
 import com.dongVu1105.identity_service.entity.User;
 import com.dongVu1105.identity_service.exception.AppException;
 import com.dongVu1105.identity_service.exception.ErrorCode;
-import com.dongVu1105.identity_service.mapper.ProfileMapper;
 import com.dongVu1105.identity_service.mapper.UserMapper;
 import com.dongVu1105.identity_service.repository.RoleRepository;
 import com.dongVu1105.identity_service.repository.UserRepository;
-import com.dongVu1105.identity_service.repository.httpclient.ProfileClient;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -54,9 +52,14 @@ public class UserService {
         } catch (DataIntegrityViolationException exception){
             throw new AppException(ErrorCode.USER_EXISTED);
         }
-        UserResponse userResponse = userMapper.toUserCreationResponse(user);
+        UserResponse userResponse = userMapper.toUserResponse(user);
 //        userResponse.setId(profileCreationResponse.getId());
         return userResponse;
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserResponse> getUsers (){
+        return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
     }
 
 

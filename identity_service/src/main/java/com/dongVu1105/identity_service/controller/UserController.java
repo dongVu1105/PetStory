@@ -9,10 +9,9 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -23,7 +22,11 @@ public class UserController {
 
     @PostMapping("/register")
     public ApiResponse<UserResponse> create (@RequestBody @Valid UserCreationRequest request) throws AppException {
-        System.out.println("Da vao user create controller");
         return ApiResponse.<UserResponse>builder().result(userService.create(request)).build();
+    }
+
+    @GetMapping("/getAll")
+    public ApiResponse<List<UserResponse>> getUsers (){
+        return ApiResponse.<List<UserResponse>>builder().result(userService.getUsers()).build();
     }
 }

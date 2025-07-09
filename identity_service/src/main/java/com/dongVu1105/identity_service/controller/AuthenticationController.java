@@ -12,10 +12,7 @@ import com.dongVu1105.identity_service.service.AuthenticationService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,28 +22,28 @@ public class AuthenticationController {
     AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    ApiResponse<AuthenticationResponse> authenticate (@RequestParam AuthenticationRequest request) throws AppException {
+    ApiResponse<AuthenticationResponse> authenticate (@RequestBody AuthenticationRequest request) throws AppException {
         return ApiResponse.<AuthenticationResponse>builder()
                 .result(authenticationService.authenticate(request))
                 .build();
     }
 
     @PostMapping("/introspect")
-    ApiResponse<IntrospectResponse> introspect (@RequestParam IntrospectRequest request) throws AppException {
+    ApiResponse<IntrospectResponse> introspect (@RequestBody IntrospectRequest request) throws AppException {
         return ApiResponse.<IntrospectResponse>builder()
                 .result(authenticationService.introspect(request))
                 .build();
     }
 
     @PostMapping("/logout")
-    ApiResponse<Void> logout (@RequestParam LogoutRequest request) throws Exception {
+    ApiResponse<Void> logout (@RequestBody LogoutRequest request) throws Exception {
         authenticationService.logout(request);
         return ApiResponse.<Void>builder()
                 .build();
     }
 
     @PostMapping("/refresh-token")
-    ApiResponse<AuthenticationResponse> refreshToken (@RequestParam RefreshTokenRequest request) throws Exception {
+    ApiResponse<AuthenticationResponse> refreshToken (@RequestBody RefreshTokenRequest request) throws Exception {
         return ApiResponse.<AuthenticationResponse>builder()
                 .result(authenticationService.refreshToken(request))
                 .build();

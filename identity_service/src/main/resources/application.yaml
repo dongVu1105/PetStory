@@ -22,6 +22,6 @@ app:
 
 jwt:
   signerKey: "4vCM6CA5NXhXhG+LjHY+PfQRZYGjm13cHoNxVPuDyEYz2XB5SO/8Ko2vCxBkqHeT"
-  access-token-duraion: 30
-  refresh-token-duraion: 300
+  access-token-duration: 60
+  refresh-token-duration: 3000
 
