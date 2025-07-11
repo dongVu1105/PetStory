@@ -57,7 +57,6 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate (AuthenticationRequest request) throws AppException {
         User user = userRepository.findByUsername(request.getUsername()).orElseThrow(
                 () -> new AppException(ErrorCode.USER_NOT_EXISTED));
-        System.out.println("Da check username");
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
@@ -75,7 +74,6 @@ public class AuthenticationService {
         try {
             verifyToken(request.getAccessToken(), false);
         } catch (Exception e){
-            System.out.println(e.getMessage());
             isValid = false;
         }
         return IntrospectResponse.builder().valid(isValid).build();

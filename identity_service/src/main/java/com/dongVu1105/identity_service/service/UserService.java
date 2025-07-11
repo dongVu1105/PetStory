@@ -2,15 +2,19 @@ package com.dongVu1105.identity_service.service;
 
 import com.dongVu1105.identity_service.constant.PredefinedRole;
 import com.dongVu1105.identity_service.dto.request.ChangePasswordRequest;
+import com.dongVu1105.identity_service.dto.request.ProfileCreationRequest;
 import com.dongVu1105.identity_service.dto.request.UserCreationRequest;
+import com.dongVu1105.identity_service.dto.response.ProfileResponse;
 import com.dongVu1105.identity_service.dto.response.UserResponse;
 import com.dongVu1105.identity_service.entity.Role;
 import com.dongVu1105.identity_service.entity.User;
 import com.dongVu1105.identity_service.exception.AppException;
 import com.dongVu1105.identity_service.exception.ErrorCode;
+import com.dongVu1105.identity_service.mapper.ProfileMapper;
 import com.dongVu1105.identity_service.mapper.UserMapper;
 import com.dongVu1105.identity_service.repository.RoleRepository;
 import com.dongVu1105.identity_service.repository.UserRepository;
+import com.dongVu1105.identity_service.repository.httpclient.ProfileClient;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -33,8 +37,8 @@ public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
-//    ProfileClient profileClient;
-//    ProfileMapper profileMapper;
+    ProfileClient profileClient;
+    ProfileMapper profileMapper;
     RoleRepository roleRepository;
 
     public UserResponse create (UserCreationRequest request) throws AppException {
@@ -45,17 +49,18 @@ public class UserService {
                 () -> new AppException(ErrorCode.ROLE_NOT_EXISTED)));
         user.setRoles(roles);
 
-//        ProfileCreationRequest profileCreationRequest = profileMapper.toProfileCreationRequest(request);
-//        profileCreationRequest.setUserID(user.getId());
-//        ProfileCreationResponse profileCreationResponse = profileClient.create(profileCreationRequest).getResult();
-
         try {
             user = userRepository.save(user);
         } catch (DataIntegrityViolationException exception){
             throw new AppException(ErrorCode.USER_EXISTED);
         }
+
+        ProfileCreationRequest profileCreationRequest = profileMapper.toProfileCreationRequest(request);
+        profileCreationRequest.setUserId(user.getId());
+        ProfileResponse profileResponse = profileClient.create(profileCreationRequest).getResult();
+
         UserResponse userResponse = userMapper.toUserResponse(user);
-//        userResponse.setId(profileCreationResponse.getId());
+        userResponse.setId(profileResponse.getId());
         return userResponse;
     }
 

@@ -1,4 +1,4 @@
-package com.dongVu1105.identity_service.dto.request;
+package com.dongVu1105.profile_service.dto.request;
 
 
 import lombok.*;

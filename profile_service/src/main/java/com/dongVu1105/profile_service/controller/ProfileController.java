@@ -1,0 +1,41 @@
+package com.dongVu1105.profile_service.controller;
+
+import com.dongVu1105.profile_service.dto.ApiResponse;
+import com.dongVu1105.profile_service.dto.request.ProfileCreationRequest;
+import com.dongVu1105.profile_service.dto.request.ProfileUpdationRequest;
+import com.dongVu1105.profile_service.dto.response.ProfileResponse;
+import com.dongVu1105.profile_service.service.ProfileService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/user")
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class ProfileController {
+    ProfileService profileService;
+
+    @PostMapping("/updateMyProfile")
+    ApiResponse<ProfileResponse> update (@RequestBody ProfileUpdationRequest request){
+        return ApiResponse.<ProfileResponse>builder().result(profileService.updateMyProfile(request)).build();
+    }
+
+    @GetMapping("/getAll")
+    ApiResponse<List<ProfileResponse>> getAllProfile (){
+        return ApiResponse.<List<ProfileResponse>>builder().result(profileService.getAllProfile()).build();
+    }
+
+    @GetMapping("/getMyProfile")
+    ApiResponse<ProfileResponse> getMyProfile (){
+        return ApiResponse.<ProfileResponse>builder().result(profileService.getMyProfile()).build();
+    }
+
+    @GetMapping("/getProfile/{userId}")
+    ApiResponse<ProfileResponse> getMyProfile (@PathVariable("userId") String userId){
+        return ApiResponse.<ProfileResponse>builder().result(profileService.getProfileByUserId(userId)).build();
+    }
+}

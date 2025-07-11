@@ -1,6 +1,7 @@
-package com.dongVu1105.identity_service.dto.request;
+package com.dongVu1105.profile_service.dto.request;
 
 
+import com.dongVu1105.profile_service.validation.BirthDayConstraint;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,12 +12,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProfileCreationRequest {
-    String userId;
+public class ProfileUpdationRequest {
     String firstName;
     String lastName;
     boolean gender;
     String email;
     String phoneNumber;
+    @BirthDayConstraint(min = 16, message = "INVALID_BIRTH")
     LocalDate birthday;
 }

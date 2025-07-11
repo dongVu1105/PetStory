@@ -1,5 +1,6 @@
 package com.dongVu1105.identity_service.dto.request;
 
+import com.dongVu1105.identity_service.validation.BirthDayConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -25,6 +26,7 @@ public class UserCreationRequest {
     @NotBlank(message = "EMAIL_IS_REQUIRED")
     String email;
     String phoneNumber;
+    @BirthDayConstraint(min = 16, message = "INVALID_BIRTH")
     LocalDate birthday;
 
 }
