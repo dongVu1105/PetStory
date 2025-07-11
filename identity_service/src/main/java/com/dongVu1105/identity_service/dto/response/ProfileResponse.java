@@ -10,9 +10,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProfileCreationResponse {
+public class ProfileResponse {
     String id;
-    String userID;
+    String userId;
     String firstName;
     String lastName;
     boolean gender;
