@@ -2,6 +2,7 @@ package com.dongVu1105.identity_service.service;
 
 import com.dongVu1105.identity_service.constant.PredefinedRole;
 import com.dongVu1105.identity_service.dto.request.ChangePasswordRequest;
+import com.dongVu1105.identity_service.dto.request.NotificationEvent;
 import com.dongVu1105.identity_service.dto.request.ProfileCreationRequest;
 import com.dongVu1105.identity_service.dto.request.UserCreationRequest;
 import com.dongVu1105.identity_service.dto.response.ProfileResponse;
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,6 +42,7 @@ public class UserService {
     ProfileClient profileClient;
     ProfileMapper profileMapper;
     RoleRepository roleRepository;
+    KafkaTemplate<String, Object> kafkaTemplate;
 
     public UserResponse create (UserCreationRequest request) throws AppException {
         User user = userMapper.toUser(request);
@@ -58,6 +61,15 @@ public class UserService {
         ProfileCreationRequest profileCreationRequest = profileMapper.toProfileCreationRequest(request);
         profileCreationRequest.setUserId(user.getId());
         ProfileResponse profileResponse = profileClient.create(profileCreationRequest).getResult();
+
+        NotificationEvent notificationEvent = NotificationEvent.builder()
+                .channel("EMAIL")
+                .recipient(request.getEmail())
+                .subject("Welcome to PetStory")
+                .body("Hello " + request.getUsername() +", you created account successfully!")
+                .build();
+
+        kafkaTemplate.send("notification-delivery", notificationEvent);
 
         UserResponse userResponse = userMapper.toUserResponse(user);
         userResponse.setId(profileResponse.getId());
