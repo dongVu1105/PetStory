@@ -16,6 +16,7 @@ public class ProfileResponse {
     String firstName;
     String lastName;
     boolean gender;
+    String username;
     String email;
     String phoneNumber;
     LocalDate birthday;
