@@ -19,14 +19,14 @@ import org.springframework.stereotype.Component;
 public class NotificationController {
     EmailService emailService;
 
-    @KafkaListener(topics = "notification-delivery")
-    public void listenNotificationDelivery (NotificationEvent notificationEvent){
-        emailService.sendEmail(SendEmailRequest.builder()
-                .to(Recipient.builder()
-                        .email(notificationEvent.getRecipient())
-                        .build())
-                .subject(notificationEvent.getSubject())
-                .htmlContent(notificationEvent.getBody())
-                .build());
-    }
+//    @KafkaListener(topics = "notification-delivery")
+//    public void listenNotificationDelivery (NotificationEvent notificationEvent){
+//        emailService.sendEmail(SendEmailRequest.builder()
+//                .to(Recipient.builder()
+//                        .email(notificationEvent.getRecipient())
+//                        .build())
+//                .subject(notificationEvent.getSubject())
+//                .htmlContent(notificationEvent.getBody())
+//                .build());
+//    }
 }
