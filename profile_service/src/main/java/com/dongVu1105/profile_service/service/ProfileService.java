@@ -32,7 +32,6 @@ public class ProfileService {
 
     public ProfileResponse updateMyProfile (ProfileUpdationRequest request){
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println("user id: " + userId);
         UserProfile userProfile = profileRepository.findByUserId(userId).orElseThrow(
                 () -> new AppException(ErrorCode.PROFILE_NOT_EXISTED));
         profileMapper.update(userProfile, request);
@@ -40,9 +39,11 @@ public class ProfileService {
     }
 
     public ProfileResponse getMyProfile (){
+
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         UserProfile userProfile = profileRepository.findByUserId(userId).orElseThrow(
                 () -> new AppException(ErrorCode.PROFILE_NOT_EXISTED));
+
         return profileMapper.toProfileResponse(userProfile);
     }
 
@@ -51,12 +52,9 @@ public class ProfileService {
         return profileRepository.findAll().stream().map(profileMapper::toProfileResponse).toList();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     public ProfileResponse getProfileByUserId (String userId){
         UserProfile userProfile = profileRepository.findByUserId(userId).orElseThrow(
                 () -> new AppException(ErrorCode.PROFILE_NOT_EXISTED));
         return profileMapper.toProfileResponse(userProfile);
     }
-
-
 }

@@ -7,9 +7,7 @@ import com.dongVu1105.profile_service.service.ProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,5 +18,10 @@ public class InternalProfileController {
     @PostMapping("/internal/user")
     ApiResponse<ProfileResponse> create (@RequestBody ProfileCreationRequest request){
         return ApiResponse.<ProfileResponse>builder().result(profileService.create(request)).build();
+    }
+
+    @GetMapping("/internal/user/getProfile/{userId}")
+    ApiResponse<ProfileResponse> getProfile (@PathVariable String userId){
+        return ApiResponse.<ProfileResponse>builder().result(profileService.getProfileByUserId(userId)).build();
     }
 }
