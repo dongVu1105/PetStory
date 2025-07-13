@@ -28,7 +28,7 @@
         </processorPath>
         <module name="identity_service" />
       </profile>
-      <profile name="Annotation profile for file-service" enabled="true">
+      <profile name="Annotation profile for profile_service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

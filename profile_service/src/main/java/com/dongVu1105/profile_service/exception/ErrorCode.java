@@ -21,7 +21,8 @@ public enum ErrorCode {
     EMAIL_IS_REQUIRED(1012, "Email is required", HttpStatus.BAD_REQUEST),
     INCORRECT_PASSWORD(1013, "incorrect password", HttpStatus.BAD_REQUEST),
     INVALID_BIRTH(1014, "your age must be at least {min} years old", HttpStatus.BAD_REQUEST),
-    PROFILE_NOT_EXISTED(1015, "profile not existed", HttpStatus.NOT_FOUND)
+    PROFILE_NOT_EXISTED(1015, "profile not existed", HttpStatus.NOT_FOUND),
+    CANNOT_UPDATE_AVATAR(1016, "can not update avatar", HttpStatus.NOT_FOUND)
 
     ;
 
