@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: file-service
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017/file-service?authSource=admin
+server:
+  port: 8084
+  servlet:
+    context-path: /file
+
+app:
+  file:
+    storage-dir: "D:/PetStory/file-service/file-storage"
+    download-prefix: http://localhost:8888/api/v1/file/media/download/

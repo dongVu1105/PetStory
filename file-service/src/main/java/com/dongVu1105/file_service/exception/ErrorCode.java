@@ -1,4 +1,4 @@
-package com.dongVu1105.profile_service.exception;
+package com.dongVu1105.file_service.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -21,8 +21,7 @@ public enum ErrorCode {
     EMAIL_IS_REQUIRED(1012, "Email is required", HttpStatus.BAD_REQUEST),
     INCORRECT_PASSWORD(1013, "incorrect password", HttpStatus.BAD_REQUEST),
     INVALID_BIRTH(1014, "your age must be at least {min} years old", HttpStatus.BAD_REQUEST),
-    PROFILE_NOT_EXISTED(1015, "profile not existed", HttpStatus.NOT_FOUND),
-    CANNOT_UPDATE_AVATAR(1016, "can not update avatar", HttpStatus.NOT_FOUND)
+    FILE_NOT_EXISTED(1015, "file not existed", HttpStatus.NOT_FOUND)
 
     ;
 

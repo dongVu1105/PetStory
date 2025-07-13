@@ -1,7 +1,7 @@
-package com.dongVu1105.profile_service.exception;
+package com.dongVu1105.file_service.exception;
 
 
-import com.dongVu1105.profile_service.dto.ApiResponse;
+import com.dongVu1105.file_service.dto.ApiResponse;
 import jakarta.validation.ConstraintViolation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -16,15 +16,15 @@ import java.util.Objects;
 public class GlobalException {
     private static final String MIN_ATTRIBUTE = "min";
 
-//    @ExceptionHandler(value = RuntimeException.class)
-//    public ResponseEntity<ApiResponse> handlingRuntimeException (RuntimeException e){
-//        ErrorCode errorCode = ErrorCode.UNCATEGORIZED_EXCEPTION;
-//        ApiResponse apiResponse = ApiResponse.builder()
-//                .code(errorCode.getCode())
-//                .message(errorCode.getMessage())
-//                .build();
-//        return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);
-//    }
+    @ExceptionHandler(value = RuntimeException.class)
+    public ResponseEntity<ApiResponse> handlingRuntimeException (RuntimeException e){
+        ErrorCode errorCode = ErrorCode.UNCATEGORIZED_EXCEPTION;
+        ApiResponse apiResponse = ApiResponse.builder()
+                .code(errorCode.getCode())
+                .message(errorCode.getMessage())
+                .build();
+        return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);
+    }
 
     @ExceptionHandler(value = AppException.class)
     public ResponseEntity<ApiResponse> HandlingAppException (AppException appException){
