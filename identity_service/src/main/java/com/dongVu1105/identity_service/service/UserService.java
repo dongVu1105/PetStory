@@ -61,7 +61,6 @@ public class UserService {
         ProfileCreationRequest profileCreationRequest = profileMapper.toProfileCreationRequest(request);
         profileCreationRequest.setUserId(user.getId());
         ProfileResponse profileResponse = profileClient.create(profileCreationRequest).getResult();
-
         NotificationEvent notificationEvent = NotificationEvent.builder()
                 .channel("EMAIL")
                 .recipient(request.getEmail())

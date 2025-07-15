@@ -1,4 +1,4 @@
-package com.dongVu1105.identity_service.exception;
+package com.dongVu1105.chat_service.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,9 @@ public enum ErrorCode {
     EMAIL_IS_REQUIRED(1012, "Email is required", HttpStatus.BAD_REQUEST),
     INCORRECT_PASSWORD(1013, "incorrect password", HttpStatus.BAD_REQUEST),
     INVALID_BIRTH(1014, "your age must be at least {min} years old", HttpStatus.BAD_REQUEST),
-    INVALID_USERNAME(1015, "your username must be at least {min} characters", HttpStatus.BAD_REQUEST)
+    FILE_NOT_EXISTED(1015, "file not existed", HttpStatus.NOT_FOUND),
+    GET_PROFILE_FAIL (1016, "get profile fail", HttpStatus.BAD_REQUEST),
+    CONVERSATION_NOT_FOUND (1017, "conversation not found", HttpStatus.NOT_FOUND)
 
     ;
 
