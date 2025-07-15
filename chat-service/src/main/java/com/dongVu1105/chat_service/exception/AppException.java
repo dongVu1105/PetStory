@@ -1,7 +1,7 @@
 package com.dongVu1105.chat_service.exception;
 
 
-import com.dongVu1105.file_service.exception.ErrorCode;
+
 import lombok.Getter;
 import lombok.Setter;
 

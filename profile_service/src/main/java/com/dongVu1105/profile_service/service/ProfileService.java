@@ -2,6 +2,7 @@ package com.dongVu1105.profile_service.service;
 
 import com.dongVu1105.profile_service.dto.request.ProfileCreationRequest;
 import com.dongVu1105.profile_service.dto.request.ProfileUpdationRequest;
+import com.dongVu1105.profile_service.dto.request.SearchRequest;
 import com.dongVu1105.profile_service.dto.response.FileResponse;
 import com.dongVu1105.profile_service.dto.response.ProfileResponse;
 import com.dongVu1105.profile_service.entity.UserProfile;
@@ -13,8 +14,6 @@ import com.dongVu1105.profile_service.repository.httpclient.FileClient;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.context.annotation.Profile;
-import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -72,5 +71,14 @@ public class ProfileService {
         return profileMapper.toProfileResponse(profileRepository.save(userProfile));
 
 
+    }
+
+    public List<ProfileResponse> search (SearchRequest request){
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<UserProfile> userProfiles = profileRepository.findAllByUsernameLike(request.getKey());
+        return userProfiles.stream()
+                .filter(userProfile -> !userId.equals(userProfile.getUserId()))
+                .map(profileMapper::toProfileResponse)
+                .toList();
     }
 }

@@ -1,8 +1,7 @@
 package com.dongVu1105.chat_service.configuration;
 
 
-import com.dongVu1105.file_service.configuration.CustomJwtDecoder;
-import com.dongVu1105.file_service.configuration.JwtAuthenticationEntryPoint;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

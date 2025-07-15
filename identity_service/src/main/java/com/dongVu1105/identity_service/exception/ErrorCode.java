@@ -20,7 +20,8 @@ public enum ErrorCode {
     INVALID_EMAIL(1011, "Invalid email address", HttpStatus.BAD_REQUEST),
     EMAIL_IS_REQUIRED(1012, "Email is required", HttpStatus.BAD_REQUEST),
     INCORRECT_PASSWORD(1013, "incorrect password", HttpStatus.BAD_REQUEST),
-    INVALID_BIRTH(1014, "your age must be at least {min} years old", HttpStatus.BAD_REQUEST)
+    INVALID_BIRTH(1014, "your age must be at least {min} years old", HttpStatus.BAD_REQUEST),
+    INVALID_USERNAME(1015, "your username must be at least {min} characters", HttpStatus.BAD_REQUEST)
 
     ;
 

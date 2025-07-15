@@ -3,6 +3,7 @@ package com.dongVu1105.profile_service.controller;
 import com.dongVu1105.profile_service.dto.ApiResponse;
 import com.dongVu1105.profile_service.dto.request.ProfileCreationRequest;
 import com.dongVu1105.profile_service.dto.request.ProfileUpdationRequest;
+import com.dongVu1105.profile_service.dto.request.SearchRequest;
 import com.dongVu1105.profile_service.dto.response.ProfileResponse;
 import com.dongVu1105.profile_service.service.ProfileService;
 import lombok.AccessLevel;
@@ -38,6 +39,13 @@ public class ProfileController {
     @PutMapping("/avatar")
     ApiResponse<ProfileResponse> updateAvatar (@RequestParam("file") MultipartFile file){
         return ApiResponse.<ProfileResponse>builder().result(profileService.updateAvatar(file)).build();
+    }
+
+    @GetMapping("/search")
+    ApiResponse<List<ProfileResponse>> search (@RequestBody SearchRequest request){
+        return ApiResponse.<List<ProfileResponse>>builder()
+                .result(profileService.search(request))
+                .build();
     }
 
 

@@ -2,8 +2,9 @@ package com.dongVu1105.chat_service.configuration;
 
 
 
-import com.dongVu1105.file_service.dto.ApiResponse;
-import com.dongVu1105.file_service.exception.ErrorCode;
+
+import com.dongVu1105.chat_service.dto.ApiResponse;
+import com.dongVu1105.chat_service.exception.ErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

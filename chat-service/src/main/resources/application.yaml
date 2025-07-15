@@ -9,5 +9,10 @@ spring:
   data:
     mongodb:
       uri: mongodb://root:root@localhost:27017/post-service?authSource=admin
+      auto-index-creation: true
+
+app:
+  services:
+    profile: http://localhost:8081/profile
 
 
