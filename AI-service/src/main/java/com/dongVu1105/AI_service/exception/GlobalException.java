@@ -17,15 +17,15 @@ import java.util.Objects;
 public class GlobalException {
     private static final String MIN_ATTRIBUTE = "min";
 
-//    @ExceptionHandler(value = RuntimeException.class)
-//    public ResponseEntity<ApiResponse> handlingRuntimeException (RuntimeException e){
-//        ErrorCode errorCode = ErrorCode.UNCATEGORIZED_EXCEPTION;
-//        ApiResponse apiResponse = ApiResponse.builder()
-//                .code(errorCode.getCode())
-//                .message(errorCode.getMessage())
-//                .build();
-//        return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);
-//    }
+    @ExceptionHandler(value = RuntimeException.class)
+    public ResponseEntity<ApiResponse> handlingRuntimeException (RuntimeException e){
+        ErrorCode errorCode = ErrorCode.UNCATEGORIZED_EXCEPTION;
+        ApiResponse apiResponse = ApiResponse.builder()
+                .code(errorCode.getCode())
+                .message(errorCode.getMessage())
+                .build();
+        return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);
+    }
 
     @ExceptionHandler(value = AppException.class)
     public ResponseEntity<ApiResponse> HandlingAppException (AppException appException){
