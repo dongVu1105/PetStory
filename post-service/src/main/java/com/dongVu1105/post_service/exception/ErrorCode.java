@@ -21,7 +21,10 @@ public enum ErrorCode {
     EMAIL_IS_REQUIRED(1012, "Email is required", HttpStatus.BAD_REQUEST),
     INCORRECT_PASSWORD(1013, "incorrect password", HttpStatus.BAD_REQUEST),
     INVALID_BIRTH(1014, "your age must be at least {min} years old", HttpStatus.BAD_REQUEST),
-    CANNOT_SEND_EMAIL(1015, "can not send email for new member", HttpStatus.BAD_REQUEST)
+    CANNOT_SEND_EMAIL(1015, "can not send email for new member", HttpStatus.BAD_REQUEST),
+    UPLOAD_FILE_ERROR(1016, "upload file error", HttpStatus.BAD_REQUEST),
+    CANNOT_DELETE_COMMENT (1017, "you can not delete this comment", HttpStatus.BAD_REQUEST),
+    COMMENT_NOT_EXISTED(1018, "comment not existed", HttpStatus.NOT_FOUND)
 
     ;
 

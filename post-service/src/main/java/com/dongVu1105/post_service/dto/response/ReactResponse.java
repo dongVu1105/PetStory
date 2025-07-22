@@ -10,13 +10,10 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PostResponse {
+public class ReactResponse {
     String id;
+    String postId;
     String userId;
-    String username;
-    String content;
-    String mediaUrl;
-    String formatedCreateDate;
-    Instant createdDate;
-    Instant modifiedDate;
+    boolean isReact;
+    String createdDate;
 }
