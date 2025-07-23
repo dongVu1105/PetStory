@@ -3,10 +3,12 @@ package com.dongVu1105.notification_service.controller;
 
 import com.dongVu1105.notification_service.dto.ApiResponse;
 import com.dongVu1105.notification_service.dto.request.NotificationEvent;
+import com.dongVu1105.notification_service.dto.request.ReactEvent;
 import com.dongVu1105.notification_service.dto.request.Recipient;
 import com.dongVu1105.notification_service.dto.request.SendEmailRequest;
 import com.dongVu1105.notification_service.repository.httpclient.EmailClient;
 import com.dongVu1105.notification_service.service.EmailService;
+import com.dongVu1105.notification_service.service.ReactNotificationService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,9 +20,11 @@ import org.springframework.stereotype.Component;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class NotificationController {
     EmailService emailService;
+    ReactNotificationService reactNotificationService;
 
 //    @KafkaListener(topics = "notification-delivery")
 //    public void listenNotificationDelivery (NotificationEvent notificationEvent){
+//        System.out.println(notificationEvent.toString());
 //        emailService.sendEmail(SendEmailRequest.builder()
 //                .to(Recipient.builder()
 //                        .email(notificationEvent.getRecipient())
@@ -29,4 +33,10 @@ public class NotificationController {
 //                .htmlContent(notificationEvent.getBody())
 //                .build());
 //    }
+
+    @KafkaListener(topics = "react-notification")
+    public void listenReactNotificatio (ReactEvent reactEvent){
+        System.out.println("Da vao noti - listener");
+        reactNotificationService.send(reactEvent);
+    }
 }

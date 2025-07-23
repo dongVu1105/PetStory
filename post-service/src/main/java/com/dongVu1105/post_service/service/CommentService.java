@@ -3,10 +3,12 @@ package com.dongVu1105.post_service.service;
 import com.dongVu1105.post_service.dto.request.CommentRequest;
 import com.dongVu1105.post_service.dto.response.CommentResponse;
 import com.dongVu1105.post_service.entity.Comment;
+import com.dongVu1105.post_service.entity.Post;
 import com.dongVu1105.post_service.exception.AppException;
 import com.dongVu1105.post_service.exception.ErrorCode;
 import com.dongVu1105.post_service.mapper.CommentMapper;
 import com.dongVu1105.post_service.repository.CommentRepository;
+import com.dongVu1105.post_service.repository.PostRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,6 +27,7 @@ public class CommentService {
     CommentRepository commentRepository;
     CommentMapper commentMapper;
     DateTimeFormatter dateTimeFormatter;
+    PostRepository postRepository;
 
     public CommentResponse create (CommentRequest request){
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -43,7 +46,10 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new AppException(ErrorCode.COMMENT_NOT_EXISTED));
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        if(!comment.getUserId().equals(userId)){
+        Post post = postRepository.findById(comment.getPostId()).orElseThrow(
+                () -> new AppException(ErrorCode.POST_NOT_EXISTED));
+        System.out.println(post.getUserId());
+        if(!(comment.getUserId().equals(userId) || post.getUserId().equals(userId))){
             throw new AppException(ErrorCode.CANNOT_DELETE_COMMENT);
         }
         commentRepository.deleteById(commentId);

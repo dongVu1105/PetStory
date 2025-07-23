@@ -59,6 +59,11 @@ public class PostService {
         return toPostResponse(post);
     }
 
+    public PostResponse findPostById (String id){
+        Post post = postRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.POST_NOT_EXISTED));
+        return toPostResponse(post);
+    }
+
     public PageResponse<PostResponse> getMyPost (int page, int size){
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         Sort sort = Sort.by("createdDate").descending();

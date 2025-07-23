@@ -24,7 +24,8 @@ public enum ErrorCode {
     CANNOT_SEND_EMAIL(1015, "can not send email for new member", HttpStatus.BAD_REQUEST),
     UPLOAD_FILE_ERROR(1016, "upload file error", HttpStatus.BAD_REQUEST),
     CANNOT_DELETE_COMMENT (1017, "you can not delete this comment", HttpStatus.BAD_REQUEST),
-    COMMENT_NOT_EXISTED(1018, "comment not existed", HttpStatus.NOT_FOUND)
+    COMMENT_NOT_EXISTED(1018, "comment not existed", HttpStatus.NOT_FOUND),
+    POST_NOT_EXISTED(1019, "post not existed", HttpStatus.NOT_FOUND)
 
     ;
 
