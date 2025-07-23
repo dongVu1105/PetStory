@@ -2,6 +2,8 @@ package com.dongVu1105.post_service.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.Instant;
 
@@ -10,13 +12,10 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PostResponse {
+public class CommentResponse {
     String id;
+    String postId;
     String userId;
-    String username;
     String content;
-    String mediaUrl;
-    String formatedCreateDate;
-    Instant createdDate;
-    Instant modifiedDate;
+    String createdDate;
 }

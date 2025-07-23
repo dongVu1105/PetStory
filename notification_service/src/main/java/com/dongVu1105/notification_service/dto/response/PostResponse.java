@@ -1,4 +1,4 @@
-package com.dongVu1105.post_service.dto.response;
+package com.dongVu1105.notification_service.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

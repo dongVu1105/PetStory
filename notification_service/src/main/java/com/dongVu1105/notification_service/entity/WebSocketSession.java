@@ -1,27 +1,22 @@
-package com.dongVu1105.post_service.entity;
+package com.dongVu1105.notification_service.entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.Instant;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
-@Document(value = "post")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Post {
+@Document("socket-session")
+public class WebSocketSession {
     @MongoId
     String id;
+    String socketSessionId;
     String userId;
-    String content;
-    String mediaUrl;
     Instant createdDate;
-    Instant modifiedDate;
 }

@@ -28,7 +28,7 @@
         </processorPath>
         <module name="identity_service" />
       </profile>
-      <profile name="Annotation profile for AI-service" enabled="true">
+      <profile name="Annotation profile for notification_service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -42,9 +42,9 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
         </processorPath>
         <module name="profile_service" />
+        <module name="post-service" />
         <module name="AI-service" />
         <module name="chat-service" />
-        <module name="post-service" />
         <module name="file-service" />
         <module name="notification_service" />
       </profile>
