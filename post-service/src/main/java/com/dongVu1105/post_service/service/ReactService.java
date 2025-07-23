@@ -52,7 +52,6 @@ public class ReactService {
                     .isReact(reactResponse.isReact())
                     .quantity(reactRepository.countByPostId(reactResponse.getPostId()))
                     .build();
-            System.out.println("chuan bi gui kafka");
             kafkaTemplate.send("react-notification", reactEvent);
             return reactResponse;
         } else {

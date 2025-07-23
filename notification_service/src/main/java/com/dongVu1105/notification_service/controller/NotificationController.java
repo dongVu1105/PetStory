@@ -1,12 +1,9 @@
 package com.dongVu1105.notification_service.controller;
 
 
-import com.dongVu1105.notification_service.dto.ApiResponse;
-import com.dongVu1105.notification_service.dto.request.NotificationEvent;
+import com.dongVu1105.notification_service.dto.request.CommentEvent;
 import com.dongVu1105.notification_service.dto.request.ReactEvent;
-import com.dongVu1105.notification_service.dto.request.Recipient;
-import com.dongVu1105.notification_service.dto.request.SendEmailRequest;
-import com.dongVu1105.notification_service.repository.httpclient.EmailClient;
+import com.dongVu1105.notification_service.service.CommentNotificationService;
 import com.dongVu1105.notification_service.service.EmailService;
 import com.dongVu1105.notification_service.service.ReactNotificationService;
 import lombok.AccessLevel;
@@ -21,6 +18,7 @@ import org.springframework.stereotype.Component;
 public class NotificationController {
     EmailService emailService;
     ReactNotificationService reactNotificationService;
+    CommentNotificationService commentNotificationService;
 
 //    @KafkaListener(topics = "notification-delivery")
 //    public void listenNotificationDelivery (NotificationEvent notificationEvent){
@@ -35,8 +33,12 @@ public class NotificationController {
 //    }
 
     @KafkaListener(topics = "react-notification")
-    public void listenReactNotificatio (ReactEvent reactEvent){
-        System.out.println("Da vao noti - listener");
+    public void listenReactNotification(ReactEvent reactEvent){
         reactNotificationService.send(reactEvent);
+    }
+
+    @KafkaListener(topics = "comment-notification")
+    public void listenCommentNotification (CommentEvent commentEvent){
+        commentNotificationService.send(commentEvent);
     }
 }

@@ -1,7 +1,7 @@
 package com.dongVu1105.notification_service.service;
 
 import com.corundumstudio.socketio.SocketIOServer;
-import com.dongVu1105.notification_service.dto.request.ReactEvent;
+import com.dongVu1105.notification_service.dto.request.CommentEvent;
 import com.dongVu1105.notification_service.entity.WebSocketSession;
 import com.dongVu1105.notification_service.repository.WebSocketSessionRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,12 +16,12 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class ReactNotificationService {
-    SocketIOServer socketIOServer;
+public class CommentNotificationService {
     WebSocketSessionRepository webSocketSessionRepository;
+    SocketIOServer socketIOServer;
     ObjectMapper objectMapper;
 
-    public void send (ReactEvent event){
+    public void send (CommentEvent event){
         WebSocketSession webSocketSession = webSocketSessionRepository.findByUserId(event.getPostOwnerId());
         if(Objects.nonNull(webSocketSession)){
             socketIOServer.getAllClients().forEach(socketIOClient -> {
@@ -29,7 +29,7 @@ public class ReactNotificationService {
                     String noti = null;
                     try {
                         noti = objectMapper.writeValueAsString(event);
-                        socketIOClient.sendEvent("react-noti", noti);
+                        socketIOClient.sendEvent("comment-noti", noti);
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }

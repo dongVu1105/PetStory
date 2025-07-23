@@ -1,5 +1,6 @@
 package com.dongVu1105.post_service.service;
 
+import com.dongVu1105.post_service.dto.request.CommentEvent;
 import com.dongVu1105.post_service.dto.request.CommentRequest;
 import com.dongVu1105.post_service.dto.response.CommentResponse;
 import com.dongVu1105.post_service.entity.Comment;
@@ -13,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,7 @@ public class CommentService {
     CommentMapper commentMapper;
     DateTimeFormatter dateTimeFormatter;
     PostRepository postRepository;
+    KafkaTemplate<String, Object> kafkaTemplate;
 
     public CommentResponse create (CommentRequest request){
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -35,7 +38,18 @@ public class CommentService {
         comment.setCreatedDate(Instant.now());
         comment.setUserId(userId);
         comment = commentRepository.save(comment);
-        return toCommentResponse(comment);
+        CommentResponse commentResponse = toCommentResponse(comment);
+        CommentEvent commentEvent = CommentEvent.builder()
+                .subject("COMMENT-NOTIFICATION")
+                .userId(commentResponse.getUserId())
+                .content(commentResponse.getContent())
+                .postId(commentResponse.getPostId())
+                .createdDate(commentResponse.getCreatedDate())
+                .postOwnerId(postRepository.findById(commentResponse.getPostId()).orElseThrow(
+                        () -> new AppException(ErrorCode.POST_NOT_EXISTED)).getUserId())
+                .build();
+        kafkaTemplate.send("comment-notification", commentEvent);
+        return commentResponse;
     }
 
     public List<CommentResponse> findAllByPostId (String postId){
