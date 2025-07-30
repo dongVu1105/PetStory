@@ -67,6 +67,13 @@ public class FollowService {
         }).toList();
     }
 
+    public List<FollowResponse> findAllFollowerByFollowingId (String userId){
+        List<Follow> followers = followRepository.findAllByFollowingId(userId);
+        return followers.stream().map(follow -> {
+            return toFollowResponse(follow, true);
+        }).toList();
+    }
+
     // the people who I follow
     public List<FollowResponse> findAllMyFollowings (){
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();

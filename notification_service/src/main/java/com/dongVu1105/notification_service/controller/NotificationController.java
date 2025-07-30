@@ -3,11 +3,9 @@ package com.dongVu1105.notification_service.controller;
 
 import com.dongVu1105.notification_service.dto.request.CommentEvent;
 import com.dongVu1105.notification_service.dto.request.FollowEvent;
+import com.dongVu1105.notification_service.dto.request.PostEvent;
 import com.dongVu1105.notification_service.dto.request.ReactEvent;
-import com.dongVu1105.notification_service.service.CommentNotificationService;
-import com.dongVu1105.notification_service.service.EmailService;
-import com.dongVu1105.notification_service.service.FollowNotificationService;
-import com.dongVu1105.notification_service.service.ReactNotificationService;
+import com.dongVu1105.notification_service.service.*;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -22,6 +20,7 @@ public class NotificationController {
     ReactNotificationService reactNotificationService;
     CommentNotificationService commentNotificationService;
     FollowNotificationService followNotificationService;
+    PostNotificationService postNotificationService;
 
 //    @KafkaListener(topics = "notification-delivery")
 //    public void listenNotificationDelivery (NotificationEvent notificationEvent){
@@ -48,5 +47,10 @@ public class NotificationController {
     @KafkaListener(topics = "follow-notification")
     public void listenFollowNotification (FollowEvent followEvent){
         followNotificationService.send(followEvent);
+    }
+
+    @KafkaListener(topics = "post-notification")
+    public void listenFollowNotification (PostEvent postEvent){
+        postNotificationService.send(postEvent);
     }
 }

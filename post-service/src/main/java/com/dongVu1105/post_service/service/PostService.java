@@ -1,5 +1,6 @@
 package com.dongVu1105.post_service.service;
 
+import com.dongVu1105.post_service.dto.request.PostEvent;
 import com.dongVu1105.post_service.dto.request.PostRequest;
 import com.dongVu1105.post_service.dto.response.FileResponse;
 import com.dongVu1105.post_service.dto.response.PageResponse;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +39,7 @@ public class PostService {
     DateTimeFormatter dateTimeFormatter;
     ProfileClient profileClient;
     FileClient fileClient;
+    KafkaTemplate<String, Object> kafkaTemplate;
 
     public PostResponse createPost (PostRequest request, MultipartFile file){
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -56,7 +59,14 @@ public class PostService {
                 .modifiedDate(Instant.now())
                 .build();
         post = postRepository.save(post);
-        return toPostResponse(post);
+        PostResponse postResponse = toPostResponse(post);
+        kafkaTemplate.send("post-notification", PostEvent.builder()
+                .subject("POST NOTIFICATION")
+                .userId(postResponse.getUserId())
+                .username(postResponse.getUsername())
+                .createdDate(postResponse.getFormatedCreateDate())
+                .build());
+        return postResponse;
     }
 
     public PostResponse findPostById (String id){
