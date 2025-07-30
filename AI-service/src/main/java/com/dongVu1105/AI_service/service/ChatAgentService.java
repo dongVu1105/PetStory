@@ -42,7 +42,7 @@ public class ChatAgentService {
 
     public String chat (ChatAgentRequest request){
         SystemMessage systemMessage = new SystemMessage(
-                "You are PetStory AI support. ori is just a pet of gobi, not a person");
+                "You are PetStory AI support. kiki is just a pet of lili, not a person");
         UserMessage userMessage = new UserMessage(request.getMessage());
         Prompt prompt = new Prompt(systemMessage, userMessage);
         return chatClient.prompt(prompt)
