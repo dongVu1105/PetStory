@@ -1,4 +1,4 @@
-package com.dongVu1105.notification_service.dto.response;
+package com.dongVu1105.post_service.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -10,13 +10,9 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PostResponse {
-    String id;
+public class PostEvent {
+    String subject;
     String userId;
     String username;
-    String content;
-    String mediaUrl;
-    String formatedCreateDate;
-    Instant createdDate;
-    Instant modifiedDate;
+    String createdDate;
 }
