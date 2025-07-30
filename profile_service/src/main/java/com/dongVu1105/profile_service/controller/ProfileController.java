@@ -6,6 +6,7 @@ import com.dongVu1105.profile_service.dto.request.ProfileUpdationRequest;
 import com.dongVu1105.profile_service.dto.request.SearchRequest;
 import com.dongVu1105.profile_service.dto.response.ProfileResponse;
 import com.dongVu1105.profile_service.service.ProfileService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -22,7 +23,7 @@ public class ProfileController {
     ProfileService profileService;
 
     @PostMapping("/updateMyProfile")
-    ApiResponse<ProfileResponse> update (@RequestBody ProfileUpdationRequest request){
+    ApiResponse<ProfileResponse> update (@RequestBody @Valid ProfileUpdationRequest request){
         return ApiResponse.<ProfileResponse>builder().result(profileService.updateMyProfile(request)).build();
     }
 
