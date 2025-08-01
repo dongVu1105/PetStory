@@ -11,5 +11,5 @@ server:
 
 app:
   file:
-    storage-dir: "D:/PetStory/file-service/file-storage"
+    storage-dir: "file-service/file-storage"
     download-prefix: http://localhost:8888/api/v1/file/media/download/

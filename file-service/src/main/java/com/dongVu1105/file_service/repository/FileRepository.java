@@ -21,24 +21,29 @@ import java.util.UUID;
 
 @Repository
 public class FileRepository {
+
     @Value("${app.file.storage-dir}")
-    String storageDir;
+    String storageDirRelative;
 
     @Value("${app.file.download-prefix}")
     String urlPrefix;
 
+    public FileInfo store(MultipartFile file) throws IOException {
+        // Chuyển đường dẫn tương đối thành tuyệt đối tại runtime
+        Path folder = Paths.get(storageDirRelative).toAbsolutePath().normalize();
 
-    public FileInfo store (MultipartFile file) throws IOException {
-        Path folder = Paths.get(storageDir);
+        // Tạo thư mục nếu chưa tồn tại
+        if (!Files.exists(folder)) {
+            Files.createDirectories(folder);
+        }
 
-        String fileExtension = StringUtils
-                .getFilenameExtension(file.getOriginalFilename());
+        String fileExtension = StringUtils.getFilenameExtension(file.getOriginalFilename());
 
-        String fileName = Objects.isNull(fileExtension)
+        String fileName = (fileExtension == null)
                 ? UUID.randomUUID().toString()
                 : UUID.randomUUID() + "." + fileExtension;
 
-        Path filePath = folder.resolve(fileName).normalize().toAbsolutePath();
+        Path filePath = folder.resolve(fileName);
 
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
@@ -57,3 +62,4 @@ public class FileRepository {
         return new ByteArrayResource(data);
     }
 }
+

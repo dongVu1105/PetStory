@@ -34,7 +34,7 @@ public class FileService {
         fileManagement.setOwnerId(userId);
         fileManagementRepository.save(fileManagement);
         return FileResponse.builder()
-                .originalFileName(file.getName())
+                .originalFileName(file.getOriginalFilename())
                 .url(fileInfo.getUrl())
                 .build();
     }
